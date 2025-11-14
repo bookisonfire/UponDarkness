@@ -1060,7 +1060,6 @@ def main():
         scene_func = scenes[state["scene"]] 
             #run the scene and capture the next scene's name
         next_scene = scene_func(state)
-        print(f"[DEBUG] Current scene: {state['scene']}, Next: {next_scene}")
 
         if next_scene is None:
             continue
