@@ -76,8 +76,10 @@ def get_starting_location():
         print("Invalid choice. Please select a number between 1 and 7.")
         return get_starting_location()
     if choice == "7":
-        choice = int(random.randint(1, 6))
-    return locations[str(choice)]
+        choice = str(random.randint(1, 6))
+    if choice.lower() == "q":
+        return "quit"
+    return locations[choice]
 
 def get_scenes():
     scenes = {
@@ -144,7 +146,6 @@ def get_current_scene(state):
 
 def change_scene(state, new_scene):
     state["previous_scene"] = state["scene"]
-    scene = state["scene"]
     state["scene"] = new_scene
 
 
@@ -228,12 +229,12 @@ def nothing(state):
     death("You do nothing forever and die of boredom.", state)
 
 # Typewriter effect to help with pacing.
-def type(text, delay=0.02):
+def type(text, delay=0.0125):
     for char in text:
         print(char, end='', flush=True)
         time.sleep(delay)
     print()
-    time.sleep(0.2)
+    time.sleep(0.15)
 
 
 def barracks(state):
@@ -1049,32 +1050,33 @@ def main():
     else:
         state["decisions"] = []
         type("\nReturning to your game...\n")
-        while not escape:    
-            if state["scene"] not in scenes:
-                print(f"Scene '{state['scene']}' does not exist. Please choose a valid scene.")
-                state["scene"] = get_starting_location()
-                continue
+    while not escape:    
+        if state["scene"] not in scenes:
+            print(f"Scene '{state['scene']}' does not exist. Please choose a valid scene.")
+            state["scene"] = get_starting_location()
+            continue
             
             #get the function for the current scene
-            scene_func = scenes[state["scene"]] 
+        scene_func = scenes[state["scene"]] 
             #run the scene and capture the next scene's name
-            next_scene = scene_func(state)
+        next_scene = scene_func(state)
+        print(f"[DEBUG] Current scene: {state['scene']}, Next: {next_scene}")
 
-            if next_scene is None:
-                continue
-            elif next_scene == "replay":
-                replay()
-            elif next_scene == "quit":
-                escape = True
-                break
-            else:
+        if next_scene is None:
+            continue
+        elif next_scene == "replay":
+            replay()
+        elif next_scene == "quit":
+            escape = True
+            break
+        else:
                 #update the game state to reflect scene change
-                change_scene(state, next_scene)
+            change_scene(state, next_scene)
         
 
-        if escape:
-            print("Thanks for playing!")
-            exit()
+    if escape:
+        print("Thanks for playing!")
+        exit()
 
 
 if __name__ == "__main__": 
