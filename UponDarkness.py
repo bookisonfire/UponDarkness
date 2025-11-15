@@ -186,11 +186,14 @@ def load_game_data():
             return None
     
 def replay(state):
-    replay_choice = choose("Select an option:", ["Replay the scene.", "Restart the game.", "Quit."], state)
+    replay_choice = choose("Select an option:", ["Replay the scene.", "Restart the game.", "Save", "Quit."], state)
     if replay_choice == 1:
         change_scene(state, state["previous_scene"])
     elif replay_choice == 2:
         main()
+    elif replay_choice == 3:
+        save_game_data(state)
+        replay(state)
     else:
         print("Thank you for playing!")
         exit()
@@ -203,7 +206,7 @@ def choose(prompt, options, state):
     print("\nEnter: [s]Save Game [q]Quit\n")
     choice = input("> ")
     if choice.lower() == "s":
-        save_game_data(state["player_name"], state["scene"], state["decisions"], state["chains"], state["previous_scene"], state["outcome"])
+        save_game_data(state)
         return choose(prompt, options, state)
     if choice.lower() == "q":
         return "quit"
@@ -221,14 +224,14 @@ def death(reason, state):
     time.sleep(0.5)
     type(reason)
     type("Better luck next time.\n")
-    state["outcome"] = "death"
+    state["outcome"] = reason
     return replay(state)
 
 def win(state):
     time.sleep(0.5)
     print("\n<--------------------YOU WIN!-------------------->\n")
     print("You have escaped the dungeon. Congratulations!\n")
-    state["outcome"] = "win"
+    state["outcome"] = "Congratulations! You have escaped the dungeon."
     time.sleep(1)
     return replay(state)
     
@@ -432,7 +435,7 @@ def open_other_door(state):
         return "quit"
     
 def guard_down(state):
-    type("You wake up after a few moments. The sterile white walls and teh light glistening off the metal weapons is amplifying the intense pain in your head.")
+    type("You wake up after a few moments. The sterile white walls and the light glistening off the metal weapons is amplifying the intense pain in your head.")
     type("One of the guards notices that you've woken up and they all turn their attention to you.")
     type("The first one to reach you kicks you in the ribs and you collapse, stuggling to catch your breath.")
     time.sleep(0.15)
@@ -462,7 +465,7 @@ def open_door_west_wo_key(state):
 
 def open_door_east(state):
     type("You rush to the door to your right. You wiggle the handle and it swings open. Its a small broom closet and theres a big burly man standing in front of you.")
-    type("He looks at you with a devious grin. 'Well are'nt you a cute one' he says.")
+    type("He looks at you with a devious grin. 'Well aren't you a cute one,' he says in a low grumble.")
     type("Before you have time to think, he grabs you by the chest and pulls you into the closet.")
     time.sleep(0.15)
     death("You don't want to know this one.", state)
@@ -520,7 +523,7 @@ def fight_armory(state):
     type("It takes him a moment to recover and you're able to run to the nearest wall and grab a sword off it. As you turn back around to face the guards, the hammer is already flying through the air at your head.")
     type("You quickly duck under and in one smooth motion, step foward and thrust your sword into the chest of the first guard. As hes falling to the ground you grab him and throw his body at the other guards, knocking them over.")
     type("You pick up the warhammer and swing it at them, crushing one of them. All of a sudden you hear a loud rumble and the ground begins to shake.")
-    type("All of a sudden, a giant rock comes crashing in through the window, crushing the remaining guard. You look out and see an entire army attacking the castle you're a prisoner of.")
+    type("When out of nowhere, a giant rock comes crashing in through the window, crushing the remaining guard. You look out and see an entire army attacking the castle you're a prisoner of.")
     time.sleep(0.15)
     choice = choose("Select your next action:", ["Climb out the window.", "Run for the door.", "Do Nothing."], state)
     if choice == 1:
@@ -533,7 +536,7 @@ def fight_armory(state):
         return "quit"
     
 def climb_window(state):
-    type("You run over to the hole in the window and look down. You're on the second story and theres a pile of rubble beneath you. It's an easy jump and youre on the ground floor.")
+    type("You run over to the hole in the window and look down. You're on the second story and theres a pile of rubble beneath you. It's an easy jump and you're on the ground floor.")
     type("As you land, you see a group of guards a good distance away that see you and begin charging and firing arrows at you. You turn and see a door. You run through it and into the hall behind it.")
     type("You find 4 doors in the hall. The first 3 you try to open are locked. You reach the fourth handle and feel that its hot to the touch and it burns your hand.")
     type("You let go of the handle and jump backwards. You feel the ground shake and a trapdoor opens up under you and you fall into a dark cave.")
