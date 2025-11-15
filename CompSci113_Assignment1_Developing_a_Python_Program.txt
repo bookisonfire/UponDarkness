@@ -1,3 +1,11 @@
+Computer Science 113 - Assignment 1: Developing a Python Program
+
+The prompt was concise and straight forward. It would have been possible to write a small game that ran through just a few decisions and kept it short and sweet. I starting thinking up a story and wanted to take this game a bit further than I had to. I got worried about half way through that I went to far, but I wanted to put my mind to it and complete something challenging. The bulk (about 70%) of the code is all just the story broken into small scenes that end in a decision. 
+The code is broken into 3 sections. First are the functions that dictate game behavior and decisions. Things like saving and changing scenes. I also implemented a nice clean choose() function that is called any time the user is presented with a choice that gives a nice prompt, enumerated options, saves the choice to the decisions list, and gives the user the ability to save or quit. 
+Second is the main storyline. I realized I went a bit too far, but wanted to leave myself room to add onto this game in the future without having to go add new starting locations. Just write more story.
+And third is the main function that runs the game loop.
+
+
 ### PROMPT ###
 # Create a text based adventure game in Python
 
@@ -22,6 +30,7 @@ import os
 
 ### FUNCTIONS ###
 # Define functions that will be used to control the flow of the game
+
 def display_title():
     print("\n************************************")
     print("***                              ***")
@@ -244,6 +253,7 @@ def type(text, delay=0.0125):
     time.sleep(0.15)
 
 ### Story scenes ###
+
 def barracks(state):
     type("You awaken in the barracks. As your eyes adjust, you see a group of guards. They seem to be watching you carefully.")
     type("You continue to come to and start to feel the cold chains around your wrists. You seem to be chained to the wall in the corner of the room.")
@@ -1024,7 +1034,8 @@ def kick_bucket_2(state):
     time.sleep(0.15)
     death("You are unable to escape as the guards beat you to death.", state)
 
-# Main function runs the game loop
+# Main function that runs the game loop
+
 def main():
     escape = False
     
