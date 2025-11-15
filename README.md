@@ -24,7 +24,7 @@ Or download the ZIP file and extract it to a folder.
 `cd path/to/game/folder`
 3. Run the game using Python:
 `python UponDarkness.py`
-> NOTE: On some systems, you may need to us python3 instead of python
+> NOTE: On some systems, you may need to use 'python3' instead of 'python'
 4. Follow the on-screen instructions
 
 ### Saving and Loading
